@@ -4,11 +4,14 @@
   "description": "signup for keybase using electron framework",
   "main": "index.js",
   "scripts": {
-    "test": "electron ."
+    "start": "electron ."
   },
   "author": "Poe",
   "license": "ISC",
   "devDependencies": {
     "electron": "^2.0.2"
+  },
+  "dependencies": {
+    "bootstrap": "^4.1.1"
   }
 }

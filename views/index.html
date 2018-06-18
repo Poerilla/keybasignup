@@ -4,14 +4,144 @@
 <head>
     <meta charset="UTF-8">
     <title>Keybase SignUp</title>
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/css/materialize.min.css">
 </head>
 
 <body>
-    <h1>Hello World!</h1>
-    We are using node
-    <script>document.write(process.versions.node)</script>, Chrome
-    <script>document.write(process.versions.chrome)</script>, and Electron
-    <script>document.write(process.versions.electron)</script>.
+    <h1>Keybase SignUp</h1>
+    <div class="form">
+    
+        <!-- <ul class="tab-group">
+            <li class="tab active">
+                <a href="#signup">Sign Up</a>
+            </li>
+            <li class="tab">
+                <a href="#login">Log In</a>
+            </li>
+        </ul> -->
+        <!-- Begin SignUp form -->
+        <div class="row">
+            <div class="col s12 m6">
+                <div class="card blue-grey darken-1">
+                    <div class="card-content white-text">
+                        <span class="card-title">Card Title</span>
+                        <p>Type in some information here which will advise the the user of the significence and first steps in 
+                            signing up for keybase and which poriton of the process they are current at.
+                        </p>
+
+                            <div id="signup">
+                                <h1>Sign Up for Free</h1>
+                                <!-- get rid of this post -->
+                                <form action="/" method="post">
+
+                                    <div class="top-row">
+                                        <div class="field-wrap">
+                                            <label>
+                                                First Name
+                                                <span class="req">*</span>
+                                            </label>
+                                            <input type="text" required autocomplete="off" />
+                                        </div>
+
+                                        <div class="field-wrap">
+                                            <label>
+                                                Last Name
+                                                <span class="req">*</span>
+                                            </label>
+                                            <input type="text" required autocomplete="off" />
+                                        </div>
+                                    </div>
+
+                                    <div class="field-wrap">
+                                        <label>
+                                            Email Address
+                                            <span class="req">*</span>
+                                        </label>
+                                        <input type="email" required autocomplete="off" />
+                                    </div>
+
+                                    <div class="field-wrap">
+                                        <label>
+                                            Set A Password
+                                            <span class="req">*</span>
+                                        </label>
+                                        <input type="password" required autocomplete="off" />
+                                    </div>
+
+                                    <button type="submit" onclick="signUp()" class="button button-block" />Get Started</button>
+
+                                </form>
+
+                            </div>
+
+                    </div>
+                    <div class="card-action">
+                        <a href="#">This is a link</a>
+                        <a href="#">This is a link</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Begin Login form -->
+        <div class="row">
+            <div class="col s12 m6">
+                <div class="card blue-grey darken-1">
+                    <div class="card-content white-text">
+                        <span class="card-title">Card Title</span>
+                        <p>For returning customers</p>
+                    </div>
+
+                    <div id="login">
+                        <h1>Welcome Back!</h1>
+                        <!--  get rid of this post too -->
+                        <form action="/" method="post">
+                    
+                            <div class="field-wrap">
+                                <label>
+                                    Email Address
+                                    <span class="req">*</span>
+                                </label>
+                                <input type="email" required autocomplete="off" />
+                            </div>
+                    
+                            <div class="field-wrap">
+                                <label>
+                                    Password
+                                    <span class="req">*</span>
+                                </label>
+                                <input type="password" required autocomplete="off" />
+                            </div>
+                    
+                            <p class="forgot">
+                                <a href="#">Forgot Password?</a>
+                            </p>
+                    
+                            <button class="button button-block" />Log In</button>
+                    
+                        </form>
+                    
+                    </div>
+
+                    <div class="card-action">
+                        <a href="#">This is a link</a>
+                        <a href="#">This is a link</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="tab-content">
+            
+        </div>
+        <!-- tab-content -->
+    
+    </div>
+    <!-- /form -->
+<script>
+
+</script>
 </body>
 
 </html>
