@@ -1,4 +1,5 @@
-const { app, BrowserWindow, ipcMain } = require('electron')
+const { app, BrowserWindow, ipcMain }   = require('electron')
+const requestModule                     = require('request')
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -48,12 +49,44 @@ app.on('activate', () => {
 
 // Listen for async message from renderer process
 ipcMain.on('async', (event, arg) => {
-    // Print 1
+    
     console.log(JSON.parse(arg));
+    let userData = JSON.parse(arg);
+    // Process user Data
+    // userData = process_raw_userData(userData);
 
-
+    // Post the user data and store the reponse for further analysis
+    let keybase_Response = post_to_keybase(userData);
     //include some logic and checks here to generate a reply
 
     // Reply on async message from renderer process
-    event.sender.send('async-reply', 2);
+    event.sender.send('async-reply', JSON.stringify(keybase_Response));
+    console.log('sent response');
 });
+
+/**Post to Keybase
+ * 
+ */
+function post_to_keybase(userData) {
+
+    let url = `https://keybase.io/_/api/1.0/signup.json`;
+
+    let requestObject = {
+        headers: { 'content-type': 'application/x-www-form-urlencoded' },
+        url: url,
+        body: JSON.stringify(userData)
+    };
+
+
+    requestModule.post(requestObject, (err, res, data) => {
+        console.log(data)
+        return data;
+    });
+}
+
+/**Process userData
+ * Use encryption tools to hash and salt user password
+ */
+function process_raw_userData(args) {
+
+}
