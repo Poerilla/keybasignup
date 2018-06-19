@@ -1,6 +1,9 @@
 # KeyBase Signup for Carleton Student
 
-One Paragraph of project description goes here
+The aim of this project is to develop a means by which a Carleton University student can easily get set-up and running with 
+a public private key without having to go through any PGP, S/MIME training or bakcground reading.
+
+The application is to be a client side UI which will guide the user through a sign up and longin process, which communicates with a server which will handle the keybase login and account setup as a means of bootstraping End-to-End Email using keybase  and social media identities.
 
 ## Getting Started
 
@@ -17,7 +20,8 @@ Give examples
 
 ### Installing
 
-A step by step series of examples that tell you how to get a development env running
+The electron framework is agnostic front end which utilises a minimal Chromium engine. All that is needed to build and run 
+the application is NodeJs and npm. Folllwing the instructions below will lead you through the process.
 
 Install node js from git Bash or Unix terminal 
 
@@ -26,10 +30,10 @@ curl -sL https://deb.nodesource.com/setup_10.x | sudo -E bash -
 sudo apt-get install -y nodejs
 ```
 
-And repeat
+On Windows machines visit the NodeJS website
 
 ```
-until finished
+https://nodejs.org
 ```
 
 End with an example of getting some data out of the system or using it for a little demo

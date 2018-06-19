@@ -1,4 +1,4 @@
-const { app, BrowserWindow } = require('electron')
+const { app, BrowserWindow, ipcMain } = require('electron')
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -46,5 +46,14 @@ app.on('activate', () => {
     }
 })
 
-  // In this file you can include the rest of your app's specific main process
-  // code. You can also put them in separate files and require them here.
+// Listen for async message from renderer process
+ipcMain.on('async', (event, arg) => {
+    // Print 1
+    console.log(JSON.parse(arg));
+
+
+    //include some logic and checks here to generate a reply
+
+    // Reply on async message from renderer process
+    event.sender.send('async-reply', 2);
+});

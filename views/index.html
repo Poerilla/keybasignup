@@ -41,7 +41,7 @@
                                                 First Name
                                                 <span class="req">*</span>
                                             </label>
-                                            <input type="text" required autocomplete="off" />
+                                            <input type="text" id="fname" required autocomplete="off" />
                                         </div>
 
                                         <div class="field-wrap">
@@ -49,7 +49,7 @@
                                                 Last Name
                                                 <span class="req">*</span>
                                             </label>
-                                            <input type="text" required autocomplete="off" />
+                                            <input type="text" id="lname" required autocomplete="off" />
                                         </div>
                                     </div>
 
@@ -66,10 +66,12 @@
                                             Set A Password
                                             <span class="req">*</span>
                                         </label>
-                                        <input type="password" required autocomplete="off" />
+                                        <input type="password" id="signup-password" required autocomplete="off" />
                                     </div>
 
-                                    <button type="submit" onclick="signUp()" class="button button-block" />Get Started</button>
+                                    <button class="btn waves-effect waves-light" type="submit" onclick="signUp()" name="action">Submit
+                                        <i class="material-icons right"></i>
+                                    </button>
 
                                 </form>
 
@@ -111,14 +113,16 @@
                                     Password
                                     <span class="req">*</span>
                                 </label>
-                                <input type="password" required autocomplete="off" />
+                                <input type="password" id="login-password" required autocomplete="off" />
                             </div>
                     
                             <p class="forgot">
                                 <a href="#">Forgot Password?</a>
                             </p>
                     
-                            <button class="button button-block" />Log In</button>
+                            <button class="btn waves-effect waves-light" type="submit" onclick="login()" name="action">Login
+                                <i class="material-icons right"></i>
+                            </button>
                     
                         </form>
                     
@@ -140,7 +144,70 @@
     </div>
     <!-- /form -->
 <script>
+    var { ipcRenderer, remote, ipcRenderer } = require('electron');
+    var main = remote.require("../index.js");
 
+    /**
+     * Sign up function:Reads the input data and uses the electron ipcRenderer to communicate with main.js
+    */
+    function signUp() {
+
+        // Get the data from the form
+        let concatedName = document.getElementById('fname').value + document.getElementById('lname').value;
+        let password = document.getElementById('signup-password').value;
+
+        // perform basic check
+
+        if (concatedName === '' | password === "") {
+            return alert('Please enter a user and password')
+        }
+
+        // Create the user object
+        reqObj = {
+            name: "poe404",
+            email: concatedName + "@cmail.carleton.ca",
+            username: "poe404",
+            pwh: "f0909fe23409...",
+            salt: "7d34343eeeee...",
+            invitation_id: "0000000000123"
+        };
+
+        // Send the object to the main javascript for processing 
+        console.log(reqObj);
+        let outCome = speak(reqObj);
+        // Analyze the response
+        console.log(outCome);
+    }
+
+    /**
+     * Login function:Reads the input data and uses the electron ipcRenderer to communicate with main.js
+    */
+    function login() {
+
+    }
+    /**
+     * speak:Helper function to send and recieve data objects from the main javascript
+     * @params responseObject - response from the main javascript which also communicates with which ever api needs to be referenced
+     * @params 
+    */
+    function speak(requestObject) {
+
+        // Send async message to main process
+        ipcRenderer.send('async', JSON.stringify(requestObject));
+        console.log("sent the request object");
+
+        // Listen for async-reply message from main process
+        ipcRenderer.on('async-reply', (event, arg) => {
+            // Print 2
+            console.log(arg);
+            return arg;
+            // Send sync message to main process
+            //let mainValue = ipcRenderer.sendSync('sync', 3);
+            // Print 4
+            //console.log(mainValue);
+        });
+        
+    }
 </script>
 </body>
 
