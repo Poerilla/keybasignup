@@ -78,7 +78,7 @@ We use [SemVer](http://semver.org/) for versioning. For the versions available, 
 
 ## Authors
 
-* **Billie Thompson** - *Initial work* - [PurpleBooth](https://github.com/PurpleBooth)
+* **613Poe** - *Initial work* - [Poerilla](https://github.com/Poerilla)
 
 See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.
 
@@ -88,6 +88,6 @@ This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md
 
 ## Acknowledgments
 
-* Hat tip to anyone whose code was used
-* Inspiration
+* Hat tip to anyone whose code was used from the keybase developers to the npm community
+* Inspiration: The secure email app Confidate https://www.franziroesner.com/pdf/confidante-eurosp17.pdf
 * Credit to https://gist.github.com/PurpleBooth/109311bb0361f32d87a2 for the readmen template

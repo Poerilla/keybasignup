@@ -198,14 +198,24 @@
         
         // Listen for async-reply message from main process
         ipcRenderer.on('async-reply', (event, arg) => {
-
+            console.log(event);
             console.log(arg);
             console.log('recieved the keybase response');
+            return arg;
             // Send sync message to main process
             //let mainValue = ipcRenderer.sendSync('sync', 3);
             // Print 4
             //console.log(mainValue);
         });
+
+        // Listen for main message
+        ipcRenderer.on('async-reply', (event, arg) => {
+            
+            console.log(arg);
+            // Invoke method directly on main process
+            // main.pong(6);
+        });
+
     }
 
 

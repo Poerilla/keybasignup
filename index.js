@@ -1,3 +1,14 @@
+/**
+ * This is the main javascript which communicates with the renderer process throught the ipcMain module
+ * 
+ * issues:
+ *      The communication between the two modules is buggy
+ *      The scrypt module is not in use yet
+ *      A successful signup page has not yet been developed
+ * 
+ */
+
+
 const { app, BrowserWindow, ipcMain }   = require('electron')
 const requestModule                     = require('request')
 
@@ -60,7 +71,10 @@ ipcMain.on('async', (event, arg) => {
     //include some logic and checks here to generate a reply
 
     // Reply on async message from renderer process
+    event.returnValue = JSON.stringify(keybase_Response);
+
     event.sender.send('async-reply', JSON.stringify(keybase_Response));
+
     console.log('sent response');
 });
 
