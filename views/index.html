@@ -145,7 +145,7 @@
     <!-- /form -->
 <script>
     var { ipcRenderer, remote, ipcRenderer } = require('electron');
-    var main = remote.require("../index.js");
+    var main = remote.require('../main.js');
 
     /**
      * Sign up function:Reads the input data and uses the electron ipcRenderer to communicate with main.js
@@ -169,6 +169,7 @@
             username: "poe404",
             pwh: "f0909fe23409...",
             salt: "7d34343eeeee...",
+            pwh_version: 3,
             invitation_id: "0000000000123"
         };
 
