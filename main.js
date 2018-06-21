@@ -4,7 +4,7 @@
  * issues:
  *      The communication between the two modules is buggy
  *      Crypto may be a little buggy but successfully added to the signup sequence
- *      A successful signup page has not yet been developed
+ *      A successful signup page has not yet been developed: INPUT Error: bad hex string for password hash pwh
  * 
  */
 
@@ -14,10 +14,50 @@ const requestModule                     = require('request');
 const triplesec                         = require('triplesec');
 const crypto                            = require('crypto-browserify');
 
+const mongoose                          = require('mongoose');
+var mongodb                             = require('mongodb');
+const spawn                             = require('child_process').spawn;
+/**************************************************************************************
+ * Mongo DB process
+ */
+
+//Mongodb spawn process
+
+// const pipe = spawn('mongod', [' —dbpath ="C:\Program Files\MongoDB\Server\3.6\bin"', ' —port', '27018']);
+const pipe = spawn('C:\\Program Files\\MongoDB\\Server\\3.6\\bin\\mongod.exe');
+pipe.stdout.on('data', function (data) {
+    console.log(data.toString('utf8'));
+});
+pipe.stderr.on('data', (data) => {
+    console.log(data.toString('utf8'));
+});
+pipe.on('close', (code) => {
+    console.log('Process exited with code: '+ code);
+});
+
+/**************************************************************************************
+ * Mongoose processes
+ */
+
+mongoose.connect('mongodb://localhost/test');
+var db = mongoose.connection;
+db.on('error', console.error.bind(console, 'connection error:'));
+db.once('open', function () {
+    // we're connected
+    console.log('connected to database');
+
+    // find out what we have in there
+    let collections = db.collectionNames();
+    for (let i = 0; i < collections.length; i++) {
+        print('Collection: ' + collections[i]); // print the name of each collection
+        db.getCollection(collections[i]).find().forEach(printjson); //and then print the json of each of its elements
+    }
+});
+
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
-let win
+let win;
 
 function createWindow() {
     // Create the browser window.
@@ -36,6 +76,10 @@ function createWindow() {
         // in an array if your app supports multi windows, this is the time
         // when you should delete the corresponding element.
         win = null
+
+        // shutdown database
+        console.log('application quit')
+        pipe.kill('SIGINT');
     })
 }
 
@@ -61,8 +105,8 @@ app.on('activate', () => {
     }
 })
 
-// Listen for async message from login renderer process
-ipcMain.on('async', (event, arg) => {
+// Listen for async message from sign-up renderer process
+ipcMain.on('sign-up', (event, arg) => {
     
     let userData = JSON.parse(arg);
     // Process user Data
@@ -70,13 +114,13 @@ ipcMain.on('async', (event, arg) => {
     userData.pwh = process_raw_signup_userData(userData);
     console.log(userData);
     // Post the user data and store the reponse for further analysis
-    let keybase_Response = post_to_keybase(userData);
+    let keybase_Response = post_to_keybase(userData, () => {
+        // Reply on async message from renderer process
+        event.returnValue = JSON.stringify(keybase_Response);
+
+        event.sender.send('sign-up-reply', JSON.stringify(keybase_Response));
+    });
     //include some logic and checks here to generate a reply
-
-    // Reply on async message from renderer process
-    event.returnValue = JSON.stringify(keybase_Response);
-
-    event.sender.send('async-reply', JSON.stringify(keybase_Response));
 
     console.log('sent response');
 });
@@ -91,7 +135,7 @@ function post_to_keybase(userData) {
     // console.log(userData.name);
     
     let requestObject = {
-        url: `https://keybase.io/_/api/1.0/signup.json` +
+        url: `https://keybase.io/_/api/1.0/signup.json?` +
             'name=' + userData.name + '&' +
             'email=' + userData.email + '&' +
             'username=' + userData.username + '&' +
