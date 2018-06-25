@@ -1,11 +1,11 @@
 /**
  * This is the main javascript which communicates with the renderer process throught the ipcMain module
- * 
+ *
  * issues:
  *      The communication between the two modules is buggy
  *      Crypto may be a little buggy but successfully added to the signup sequence
  *      A successful signup page has not yet been developed: INPUT Error: bad hex string for password hash pwh
- * 
+ *
  */
 
 
@@ -17,14 +17,33 @@ const crypto                            = require('crypto-browserify');
 const mongoose                          = require('mongoose');
 var mongodb                             = require('mongodb');
 const spawn                             = require('child_process').spawn;
+
+const os                                = require('os');
 /**************************************************************************************
  * Mongo DB process
  */
 
 //Mongodb spawn process
-
+let pipe;
 // const pipe = spawn('mongod', [' —dbpath ="C:\Program Files\MongoDB\Server\3.6\bin"', ' —port', '27018']);
-const pipe = spawn('C:\\Program Files\\MongoDB\\Server\\3.6\\bin\\mongod.exe');
+console.log("running on: " + os.platform());
+if (os.platform() == "win32") {
+  try{
+    pipe = spawn('C:\\Program Files\\MongoDB\\Server\\3.6\\bin\\mongod.exe');
+  }
+  catch(error) {
+    console.log(error);
+  }
+}
+else {
+  try{
+    pipe = spawn('mongod');
+  }
+  catch(error){
+    console.log(error);
+  }
+
+}
 pipe.stdout.on('data', function (data) {
     console.log(data.toString('utf8'));
 });
@@ -107,7 +126,7 @@ app.on('activate', () => {
 
 // Listen for async message from sign-up renderer process
 ipcMain.on('sign-up', (event, arg) => {
-    
+
     let userData = JSON.parse(arg);
     // Process user Data
     userData.salt = crypto.randomBytes(16).toString('hex');
@@ -126,14 +145,14 @@ ipcMain.on('sign-up', (event, arg) => {
 });
 
 /**Post to Keybase
- * 
+ *
  */
 function post_to_keybase(userData) {
 
     //let url = `https://keybase.io/_/api/1.0/signup.json`;
 
     // console.log(userData.name);
-    
+
     let requestObject = {
         url: `https://keybase.io/_/api/1.0/signup.json?` +
             'name=' + userData.name + '&' +
