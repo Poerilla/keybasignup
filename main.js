@@ -13,6 +13,7 @@ const { app, BrowserWindow, ipcMain }   = require('electron');
 const requestModule                     = require('request');
 const triplesec                         = require('triplesec');
 const crypto                            = require('crypto-browserify');
+const jws                               = require('jws');
 
 const mongoose                          = require('mongoose');
 var mongodb                             = require('mongodb');
@@ -37,6 +38,7 @@ if (os.platform() == "win32") {
 }
 else {
   try{
+    // pipe = spawn('mongod --dbpath=/home/poe/Projects/keybasignup/data/db');
     pipe = spawn('mongod');
   }
   catch(error){
@@ -73,7 +75,9 @@ db.once('open', function () {
     }
 });
 
-
+/**************************************************************************************
+ * Build app processes
+ */
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let win;
