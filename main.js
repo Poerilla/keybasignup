@@ -210,3 +210,17 @@ function process_raw_signup_userData(arg) {
         });
     });
 }
+/**************************************************************************************
+ * eCertBot process
+ * 
+ * The following will use the Lets Encrypt servers as a test case while the local email 
+ * server is still under development
+ */
+
+ // get directorty
+ requestModule.get(url, (err, res, data)=> {
+    if(err){ 
+        throw err;
+    }
+    console.log(data)
+ })
