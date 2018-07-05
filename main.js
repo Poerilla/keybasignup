@@ -130,8 +130,13 @@ ipcMain.on('sign-up', (event, arg) => {
     let userData = JSON.parse(arg);
     // Process user Data
     userData.salt = crypto.randomBytes(16).toString('hex');
-    userData.pwh = process_raw_signup_userData(userData);
-    console.log(userData);
+    let hash = process_raw_signup_userData(userData);
+    console.log(hash);
+
+    hash.then(function (result) {
+        console.log(result) //will log results.
+    })
+
     // Post the user data and store the reponse for further analysis
     let keybase_Response = post_to_keybase(userData, () => {
         // Reply on async message from renderer process
@@ -196,7 +201,8 @@ function process_raw_signup_userData(arg) {
             } else {
                 resolve({
                     v4: hash.extra.slice(0, 32),
-                    v5: hash.extra.slice(32, 64)
+                    v5: hash.extra.slice(32, 64),
+                    password_hash: hash
                 })
                 // arg.pwh = hash.toString('hex');
                 // console.log(arg);
