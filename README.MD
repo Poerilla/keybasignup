@@ -12,7 +12,7 @@ These instructions will get you a copy of the project up and running on your loc
 ### Prerequisites
 
 To install the software:
-* Node.js adn npm
+* Node.js and npm
 
 ```
 Give examples
@@ -78,7 +78,7 @@ We use [SemVer](http://semver.org/) for versioning. For the versions available, 
 
 ## Authors
 
-* **613Poe** - *Initial work* - [Poerilla](https://github.com/Poerilla)
+* **sslpoe** - *Initial work* - [Poerilla](https://github.com/Poerilla)
 
 See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.
 
